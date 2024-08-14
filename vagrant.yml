@@ -16,6 +16,6 @@
 	vm_name:        "vm-voll"
 #
 # VBox Provisioning 
-	ansible_path:   "/home/developer/vms-vagrant/vm-voll/playbook.yml"
+	ansible_path:   "/home/developer/vms-vagrant/vm-voll/common/tasks/main.yml"
 #
 	...
