@@ -1,0 +1,10 @@
+---
+
+	ip_address:     10.10.125.52
+	name_bridge:    "enp160" # LAN: "ens33", "ens160" | Wi-Fi: "wlo1"
+	type_vbox:      "ubuntu/focal64"
+	vm_hostname:    "developer"
+	vm_name:        "vm-voll"
+	ansible_path:   "/home/developer/vms-vagrant/vm-voll/playbook.yml"
+
+	...

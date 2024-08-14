@@ -1,0 +1,145 @@
+# Ansible based over Ubuntu focal 20.04 On-promise
+	# 
+	#
+
+	# Revisão:
+	#
+	# Vs 0.0.A
+	#    | | |
+	#    | | |
+	#    | | Accuracy Patch (changes, otimizations, corrections)
+	#    | |
+	#    | Structure Modify (Add new functions, removed functions)
+	#    |
+	#    Stage (Development = 0, Production >= 1)
+	#  
+
+	#
+	# Stage-0 Update/Upgrade & Configurations   <<<<<<<<<<<<<<<<<<<<<<
+	#
+
+	---
+
+	- hosts: all
+	  become_user: vagrant
+	  become_method: sudo
+	  become: true
+
+	#
+	# Stage-1 Update/Upgrade & Configurations   <<<<<<<<<<<<<<<<<<<<<<
+	#
+
+	- name: VM Provision Start ............
+	  hosts: all
+	  gather_facts: no
+	  vars:
+	    vm_name: "vm-voll" # alterar 'vm_name' no vagrant.yml
+
+	  tasks: 
+	    - name: Set timezone to America/Sao_Paulo
+	      user:
+		name: vagrant
+		shell: timedatectl set-timezone America/Sao_Paulo
+		groups: sudo
+		append: yes
+	      become: yes
+
+	    - name: current date initial automation
+	      debug:
+		msg: "{{'%Y-%m-%d'|strftime }}"
+	      become: yes
+	 
+	    - name: current time initial automation
+	      debug:
+		msg: "{{ '%H:%M:%S'|strftime }}"
+	      become: yes
+	     
+	    # Ip-Address can be change: $ sudo ifconfig eth0 X.X.X.X netmask 255.255. 255.0 
+	    # 
+	    #- debug: 
+	    #    var: ansible_eth0.ipv4.address
+	    #  become: yes
+
+	    - name: Initial ping VM target
+	      ping:
+
+	    - name: Update apt cache
+	      apt: update_cache=yes cache_valid_time=3600
+	      become: yes
+
+	    - name: Upgrade all apt packages
+	      apt: upgrade=dist
+	      become: yes
+
+	    - name: Install dependencies
+	      apt:
+		name: "{{ packages }}"
+		state: present
+		update_cache: yes
+	      vars:
+		packages:
+		- apt-transport-https
+		- ca-certificates
+		- curl
+		- software-properties-common
+		- gnupg-agent
+		- net-tools
+	      become: yes  
+
+	    - name: Install apt utils
+	      apt:
+		name: build-essential
+		state: latest
+	      become: yes
+
+	#
+	# Stage-2 Basic Install       <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	#
+	    - name: Install Tree
+	      apt:
+		name: tree
+		state: present
+		update_cache: yes
+	      become: yes
+
+	    - name: install zip and unzip
+	      become_method: sudo
+	      apt: name={{ item }} state=present
+	      with_items:
+		- zip
+		- unzip
+	      become: true
+
+
+	#
+	# Stage-11 Finishing          <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	#                           
+	    - name: Remove old packages
+	      apt:
+		autoremove: yes
+	      become: yes
+
+	    - name: Update all packages
+	      apt:
+		update_cache: yes
+		upgrade: dist
+	      become: yes
+
+	    - name: Final ping VM target !!
+	      ping:
+
+	    # end automation ...
+
+	    - name: current date initial automation
+	      debug:
+		msg: "{{'%Y-%m-%d'|strftime }}"
+	      become: yes
+	 
+	    - name: current time initial automation
+	      debug:
+		msg: "{{ '%H:%M:%S'|strftime }}"
+	      become: yes
+
+	#
+	# End 
+	#
