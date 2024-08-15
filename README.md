@@ -43,7 +43,7 @@
         > Regex Snippets - by Monish Basaniwal
         > Prettier-Code Formatter - by Prettier
         > Material Icon Theme - by Philipp Kief
-
+        
 
 ## Recommended modules
 
