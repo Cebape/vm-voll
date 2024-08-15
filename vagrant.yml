@@ -1,21 +1,21 @@
 ---
 # 
 # VBox Fixed IP 
-	ip_address:     10.10.125.52
+ip_address:     10.10.125.52
 #
 # VBox Bridge
-	name_bridge:    "enp160" # LAN: "ens33", "ens160" | Wi-Fi: "wlo1"
+name_bridge:    "enp160" # LAN: "ens33", "ens160" | Wi-Fi: "wlo1"
 #
 # VBox SO
-	type_vbox:      "ubuntu/focal64"
+type_vbox:      "ubuntu/focal64"
 #
 # Vbox Name
-	vm_hostname:    "developer"
+vm_hostname:    "developer"
 #
 # VBox Virtual Name
-	vm_name:        "vm-voll"
+vm_name:        "vm-voll"
 #
 # VBox Provisioning 
-	ansible_path:   "/home/developer/vms-vagrant/vm-voll/common/tasks/main.yml"
+ansible_path:   "/home/developer/vms-vagrant/vm-voll/common/tasks/main.yml"
 #
-	...
+...
